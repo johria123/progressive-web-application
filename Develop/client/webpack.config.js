@@ -18,9 +18,30 @@ module.exports = () => {
       path: path.resolve(__dirname, 'dist'),
     },
     plugins: [
-      
+      new HtmlWebpackPlugin({
+        template: './src/index.html',
+        filename: 'index.html',
+      }),
+      new WebpackPwaManifest({
+        name: 'Your App Name',
+        short_name: 'App',
+        description: 'Your app description',
+        background_color: '#ffffff',
+        theme_color: '#000000',
+        icons: [
+          {
+            src: path.resolve('src/images/icon.png'),
+            sizes: [96, 128, 192, 256, 384, 512],
+          },
+        ],
+      }),
+      new InjectManifest({
+        swSrc: './src/service-worker.js',
+        swDest: 'service-worker.js',
+      }),
+      new GenerateSW(),
     ],
-
+    
     module: {
       rules: [
         
